@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title style="text-align: center;">My Flask App</title>
+    <style>
+      button {
+        background-color: red;
+        color: gold;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+     }
+     button: hover{
+      background-color: lightblue;
+     }
+    </style>
+    <script>
+      function validateForm() {
+	  var location = document.forms["itineraryForm"]["location"].value;
+	  var startDate = document.forms["itineraryForm"]["start_date"].value;
+	  var endDate = document.forms["itineraryForm"]["end_date"].value;
+	
+	  if (location == "" || startDate == "" || endDate == "") {
+	    alert("Please fill all the required fields.");
+	    return false;
+	  }
+	
+	  var start = new Date(startDate);
+	  var end = new Date(endDate);
+	  var diff = (end - start) / (1000 * 60 * 60 * 24); // difference in days
+	
+	  if (diff > 10) {
+	    alert("End date must be no more than 10 days after start date.");
+	    return false;
+	  }
+	}
+    </script>
+  </head>
+
+  <body>
+    <h1>Itinerary Maker</h1>
+    <form name="itineraryForm" method="POST" action="{{ url_for('itinerary') }}" onsubmit="return validateForm()">
+      <label for="location">Enter Travel Location</label><br>
+      <input type="text" id="location" name="location"><br><br>
+
+      <label for="start_date">Enter Start Date</label><br>
+      <input type="date" id="start_date" name="start_date"><br><br>
+
+      <label for="end_date">Enter End Date</label><br>
+      <input type="date" id="end_date" name="end_date"><br><br>      
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
